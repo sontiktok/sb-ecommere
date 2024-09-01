@@ -8,6 +8,9 @@ import com.ecommere.project.payload.CategoryResponse;
 import com.ecommere.project.repositories.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +25,13 @@ public class CategoryServiceImpl implements CategoryService{
 
 
     @Override
-    public CategoryResponse getAllCategories() {
-        List<Category> categories = categoryRepository.findAll();
+    public CategoryResponse getAllCategories(Integer pageNumber,Integer pageSize) {
+
+        //Được cung cấp từ Spring Data JPA
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize);
+        Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
+
+        List<Category> categories = categoryPage.getContent();
         if(categories.isEmpty()){
             throw new APIException("Don't have category created utill now!");
         }
