@@ -29,6 +29,7 @@ public class CategoryServiceImpl implements CategoryService{
 
         //Được cung cấp từ Spring Data JPA
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize);
+        //Chứa các thông số về dữ liệu phân trang
         Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
 
         List<Category> categories = categoryPage.getContent();
@@ -39,7 +40,14 @@ public class CategoryServiceImpl implements CategoryService{
                 .map(category -> modelMapper.map(category, CategoryDTO.class))
                 .toList();
         CategoryResponse categoryResponse = new CategoryResponse();
+
         categoryResponse.setContent(categoryDTOS);
+        categoryResponse.setPageNumber(categoryPage.getNumber());
+        categoryResponse.setPageSize(categoryPage.getSize());
+        categoryResponse.setTotalPages(categoryPage.getTotalPages());
+        categoryResponse.setTotalElements(categoryPage.getTotalElements());
+        categoryResponse.setLastPage(categoryPage.isLast());
+
         return categoryResponse;
     }
 
