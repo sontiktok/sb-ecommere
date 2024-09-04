@@ -1,7 +1,12 @@
 package com.ecommere.project.service;
+import com.ecommere.project.model.Product;
+import com.ecommere.project.payload.ProductDTO;
+import com.ecommere.project.payload.ProductResponse;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public interface ProductService {
+    ProductDTO addProduct(Product product, Long categoryId);
+
+    ProductResponse getAllProducts();
+
+    ProductResponse searchByCategory(Long categoryId);
 }
