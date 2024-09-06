@@ -1,5 +1,6 @@
 package com.ecommere.project.service;
 
+import com.ecommere.project.exceptions.APIException;
 import com.ecommere.project.exceptions.ResourceNotFoundException;
 import com.ecommere.project.model.Category;
 import com.ecommere.project.model.Product;
@@ -37,6 +38,17 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO addProduct(ProductDTO productDTO, Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
+
+        boolean isProductExisted = false;
+        List<Product> products= category.getProducts();
+        for(Product product:products){
+            if(product.getProductName().equals(productDTO.getProductName())){
+                isProductExisted = true;
+                break;
+            }
+        }
+        if(isProductExisted)
+            throw new APIException("Product is existed!!!");
 
         Product product = modelMapper.map(productDTO, Product.class);
         product.setImage("Default.png");
