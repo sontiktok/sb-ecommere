@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-
+// Dùng để lấy userdetail dựa vào usname, truy vấn xuất db để lấy
+// Lấy được thì trả về Userdetail, không thì trả về exception
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired

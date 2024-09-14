@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+// Dùng để xử lý khi không xác thực được.
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
