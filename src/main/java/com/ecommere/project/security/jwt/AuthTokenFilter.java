@@ -1,5 +1,7 @@
 package com.ecommere.project.security.jwt;
 
+import com.ecommere.project.security.services.UserDetailsImpl;
+import com.ecommere.project.security.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -24,7 +27,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
@@ -57,7 +60,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
 
     private String parseJwt(HttpServletRequest request) {
-        String jwt = jwtUtils.getJwtFromHeader(request);
+//        String jwt = jwtUtils.getJwtFromHeader(request);
+        String jwt = jwtUtils.getJwtFromCookies(request);
         logger.debug("AuthTokenFilter.java: {}", jwt);
         return jwt;
     }
