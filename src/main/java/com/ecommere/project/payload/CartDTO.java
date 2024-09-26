@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDTO {
-    private Long cardId;
-    private Double totalPrice;
+    private Long cartId;
+    private Double totalPrice = 0.0;
     private List<ProductDTO> products = new ArrayList<>();
 }
